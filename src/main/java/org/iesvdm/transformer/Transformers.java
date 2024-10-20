@@ -11,5 +11,14 @@ public class Transformers
             b.add(tran.transform(t));
         return b;
     }
+
+    public static <T> ArrayList<T> applyDest(Transformer<T> tran, ArrayList<T> a) {
+        for (int i = 0; i < a.size(); i++) {
+            T t = a.get(i);
+            a.set(i, tran.transform(t));
+        }
+        return a;
+    }
+
 }
 

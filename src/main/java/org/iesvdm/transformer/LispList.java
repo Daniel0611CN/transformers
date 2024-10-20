@@ -73,3 +73,45 @@ public class LispList<E>
     }
 
 }
+
+
+// En esta clase, vamos a probar el funcionamiento de la clase LispList, para
+// entender cada uno de sus metodos.
+//
+//
+// <---------------- EXPLICACIÓN GENERAL CLASE LISPLIST ------------------> //
+//
+// La clase LispList, implementa el genérico <E>;
+//
+// Dentro vemos que tiene un atributo privado de la clase Cell,
+// que implementa el genérico <E>, llamado myList;
+//
+// La clase Cell, es una clase estática privada,
+// que se encuentra dentro de la clase LispList;
+// Esta tiene un atributo T 'first', y otro como
+// objeto de Cell, que implementa T, 'rest';
+//
+// En la clase LispList, también tenemos el constructor,
+// y los siguientes métodos.
+//
+// isEmpty() -> Comprueba si la lista es null, y retorna true o false;
+// E head() -> Devuelve el primer elemento de la lista,
+// Lo que hay que destacar, que no retorna el primero que añades,
+// ya que actua como una pila;
+// El primero que entra es el ultimo que sale;
+// Por lo que retornara el ultimo elemento introducido;
+// LispList<E> tail() -> Devuelve una nueva LispList<E>,
+// Con el resto de elementos de la lista,
+// quitando el primero;
+// LispList<E> cons(E item) -> retorna una nueva
+// LispList<E>, añadiendo el E item;
+// Básicamente lo que hace es crear un nuevo Cell, al que
+// asigna los valores, item, y miList, con esto hace
+// que el valor first, que será el que se añada, apunte al elemento
+// anterior, y así se pueda formar la lista. A través de un
+// conjunto de celdas;
+// <T> LispList<T> empty() -> devuelve una nueva lista vacía;
+// <T> String restToString(LispList<T> l) -> se encarga
+// de convertir el resto de la lista en una cadena;
+// Y por último tenemos el metodo equals y toString;
+
