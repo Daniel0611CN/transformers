@@ -1,6 +1,8 @@
 package org.iesvdm.transformer;
 
 
+import java.util.ArrayList;
+
 public class Joiners
 {
     public static <T> LispList<T> zipLists(Joiner<T> joiner,LispList<T> ls1,LispList<T> ls2)
@@ -14,6 +16,23 @@ public class Joiners
             return t.cons(h);
         }
     }
+
+    public static <T> ArrayList<T> zipArrayLists(Joiner<T> joiner,ArrayList<T> l1,ArrayList<T> l2)
+    {
+        if(l1.isEmpty()||l2.isEmpty())
+            return new ArrayList<>();
+        else
+        {
+            T h;
+            ArrayList<T> t = new ArrayList<>();
+            for (int i = 0; i < l1.size(); i++) {
+                    h = joiner.join(l1.get(i),l2.get(i));
+                    t.add(h);
+            }
+            return t;
+        }
+    }
+
 }
 
 /*
