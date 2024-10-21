@@ -1,6 +1,9 @@
 package org.iesvdm.transformer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class Transformers
 {
@@ -18,6 +21,23 @@ public class Transformers
             a.set(i, tran.transform(t));
         }
         return a;
+    }
+
+    public static <T> ArrayList<T> transformList(Transformer<T> tran, LispList<T> list) {
+
+        List<T> lista = (List<T>) Arrays.asList(list.toString()
+                .replaceAll("[\\[\\]]", "")
+                .split(",\\s*"));
+
+        ArrayList<T> result = new ArrayList<>();
+        for (T s : lista) { result.add((T) Integer.valueOf((String) s));}
+
+        for (int i = 0; i < result.size(); i++) {
+            tran.transform(result.get(i));
+        }
+
+        ArrayList<T> b = Transformers.applyConst(tran, result);
+        return b;
     }
 
 }
