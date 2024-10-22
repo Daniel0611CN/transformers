@@ -25,17 +25,15 @@ public class Transformers
 
     public static <T> ArrayList<T> transformList(Transformer<T> tran, LispList<T> list) {
 
-        List<T> lista = (List<T>) Arrays.asList(list.toString()
-                .replaceAll("[\\[\\]]", "")
-                .split(",\\s*"));
-
         ArrayList<T> result = new ArrayList<>();
-        for (T s : lista) { result.add((T) Integer.valueOf((String) s));}
-
-        for (int i = 0; i < result.size(); i++) {
-            tran.transform(result.get(i));
+        while (!list.isEmpty()) { // Aqui lo que hace es iterar la LispList, comprobando si no está vacía.
+            result.add(list.head()); // Aquí añadimos a la nueva lista el primer elemento (head).
+            list = list.tail(); // Modificamos la LispList, y le quitamos el head anterior, por lo que el nuevo head será el
+            // primer elemento del tail. Así se continúa hasta que la lista esté vacía.
         }
 
+        System.out.println("Lista: " + result);
+        for (int i = 0; i < result.size(); i++) { tran.transform(result.get(i));}
         ArrayList<T> b = Transformers.applyConst(tran, result);
         return b;
     }
