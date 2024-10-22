@@ -33,18 +33,19 @@ public class Ejercicio5 {
                     System.out.println("\n1. Introducir Cadena\n2. Salir");
                     opt = sc.nextInt();
                 }
+                System.out.println("\nIntroduce la cadena que quieras añadir a los elementos de la lista: ");
+                String elemento = sc.next();
                 Transformer<T> prueba = new Transformer<>() {
                     @Override
                     public T transform(T obj) {
-                        T a = (T) obj;
-                        return (T) ((obj)+" hola");
+                        return (T) ((obj)+elemento);
                     }
                 };
                 ArrayList<T> a = Transformers.transformList((Transformer<T>) prueba, aux);
                 System.out.println("ArrayList Modificado: " + a);
                 break;
             case 2:
-                System.out.println("Introduce un número: ");
+                System.out.println("\nIntroduce un número: ");
                 Integer numero = sc.nextInt();
                 LispList<T> aux2 = LispList.empty();
                 aux2 = aux2.cons((T) numero);
@@ -59,11 +60,25 @@ public class Ejercicio5 {
                     System.out.println("\n1. Introducir Entero\n2. Salir");
                     opt2 = sc.nextInt();
                 }
+                System.out.println("\nIntroduce la cadena que quieras añadir a los elementos de la lista: ");
+                int elementoInt = sc.nextInt();
+                System.out.println("\nIntroduce la operación que quieres realizar: \n1. Suma\n2. Resta\n3. Multiplicacion\n4. Division");
+                int operacion = sc.nextInt();
                 Transformer<Integer> prueba2 = new Transformer<>() {
                     @Override
                     public Integer transform(Integer obj) {
                         T a = (T) obj;
-                        return (Integer) (obj)*3; // Aquí indicar el valor para la transformación;
+                        switch (operacion) {
+                            case 1:
+                                return (Integer) (obj)+elementoInt;
+                            case 2:
+                                return (Integer) (obj)-elementoInt;
+                            case 3:
+                                return (Integer) (obj)*elementoInt;
+                            case 4:
+                                return (Integer) (obj)/elementoInt;
+                        }
+                        return (Integer) (obj); // Aquí indicar el valor para la transformación;
                     }
                 };
                 ArrayList<T> b = Transformers.transformList((Transformer<T>) prueba2, aux2);
