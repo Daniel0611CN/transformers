@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class Ejercicio5 {
 
     public static <T> void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
         applyTransformList(sc);
         sc.close();
@@ -82,7 +81,7 @@ public class Ejercicio5 {
                     }
                 };
                 ArrayList<T> b = Transformers.transformList((Transformer<T>) prueba2, aux2);
-                System.out.println("ArrayList Modificado: " + b);
+                System.out.println("\nArrayList Modificado: " + b);
                 break;
         }
 
