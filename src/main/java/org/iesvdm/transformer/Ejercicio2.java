@@ -23,7 +23,6 @@ public class Ejercicio2 {
 //            }
 //        };
 
-
         ArrayList<String> b = new ArrayList<>();
         System.out.println("\nIntroduce una cadena: ");
         String cadena = sc.next();
@@ -32,6 +31,8 @@ public class Ejercicio2 {
         System.out.println("\n1. Introducir otra cadena\n2. Salir");
         int opt = sc.nextInt();
 
+        AddMessage ad1 = null;
+
         for (int i = 0; opt == 1; i++) {
             System.out.println("\nIntroduce una cadena: ");
             cadena = sc.next();
@@ -39,15 +40,12 @@ public class Ejercicio2 {
             System.out.println("\n1. Introducir otra cadena\n2. Salir");
             opt = sc.nextInt();
         }
-
-        Transformer<String> tran = new Transformer<>() {
-            @Override
-            public String transform(String obj) {
-                return obj;
-            }
-        };
-
-        ArrayList<String> array = Transformers.applyDest(tran, b);
+        System.out.println("\nElige donde introducir la cadena: \n1. Delante\n2. Detrás");
+        int op = sc.nextInt();
+        System.out.println("\nIntroduce el elemento que quieres añadir a cada posicion de la lista: ");
+        String cadenaImplementada = sc.next();
+        ad1 = new AddMessage(cadenaImplementada, op);
+        ArrayList<String> array = Transformers.applyDest(ad1, b);
 
 //        ArrayList<Integer> arraytransformer = Transformers.applyDest(b, a);
 
@@ -56,9 +54,7 @@ public class Ejercicio2 {
 //            System.out.println(i);
 //        }
 
-        for (String i : array) {
-            System.out.println(i);
-        }
+        System.out.println(array);
 
         sc.close();
     }
