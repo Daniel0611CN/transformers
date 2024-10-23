@@ -40,8 +40,10 @@ public class Ejercicio2 {
             System.out.println("\n1. Introducir otra cadena\n2. Salir");
             opt = sc.nextInt();
         }
+
         System.out.println("\nElige donde introducir la cadena: \n1. Delante\n2. Detrás");
         int op = sc.nextInt();
+
         System.out.println("\nIntroduce el elemento que quieres añadir a cada posicion de la lista: ");
         String cadenaImplementada = sc.next();
         ad1 = new AddMessage(cadenaImplementada, op);
