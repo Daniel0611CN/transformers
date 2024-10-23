@@ -12,18 +12,21 @@ public class Ejercicio5 {
     }
 
     private static <T> void applyTransformList(Scanner sc) {
+        int opcion, opt, opcionCadena;
+        String cadena, elemento;
+
         System.out.println("\nElige que tipo de dato quieres introducir: \n1. Cadena \n2. Entero");
-        int opcion = sc.nextInt();
+        opcion = sc.nextInt();
 
         switch (opcion) {
             case 1:
                 System.out.println("\nIntroduce una cadena: ");
-                String cadena = sc.next();
+                cadena = sc.next();
                 LispList<T> aux = LispList.empty();
                 aux = aux.cons((T) cadena);
                 System.out.println("\nLispList: " + aux);
                 System.out.println("\n1. Introducir Cadena\n2. Salir");
-                int opt = sc.nextInt();
+                opt = sc.nextInt();
                 for (int i = 0; opt == 1; i++) {
                     System.out.println("\nIntroduce una cadena: ");
                     cadena = sc.next();
@@ -32,17 +35,15 @@ public class Ejercicio5 {
                     System.out.println("\n1. Introducir Cadena\n2. Salir");
                     opt = sc.nextInt();
                 }
+                System.out.println("\nIntroduce en la posición donde quieres introducir la cadena: \n1. Delante ('Cadena' + Elemento Lista)\n2. Detrás (Elemento Lista + 'Cadena')");
+                opcionCadena = sc.nextInt();
                 System.out.println("\nIntroduce la cadena que quieras añadir a los elementos de la lista: ");
-                String elemento = sc.next();
-                Transformer<T> prueba = new Transformer<>() {
-                    @Override
-                    public T transform(T obj) {
-                        return (T) ((obj)+elemento);
-                    }
-                };
-                ArrayList<T> a = Transformers.transformList((Transformer<T>) prueba, aux);
+                elemento = sc.next();
+                Transformer<String> transformer = new AddMessage(elemento, opcion);
+                ArrayList<T> a = Transformers.transformList((Transformer<T>) transformer, aux);
                 System.out.println("ArrayList Modificado: " + a);
                 break;
+
             case 2:
                 System.out.println("\nIntroduce un número: ");
                 Integer numero = sc.nextInt();
