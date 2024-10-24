@@ -33,6 +33,66 @@ public class Joiners
         }
     }
 
+    public static <T> ArrayList<T> fold(Joiner<T> joiner,ArrayList<T> l1) {
+        ArrayList<T> t1 = new ArrayList<>();
+        ArrayList<T> t2 = new ArrayList<>();
+        if (joiner instanceof JoinByAdding) {
+            t1.clear();
+
+            System.out.println("\nTransformando Arraylist ... ");
+
+            for (int i = 0; i < l1.size(); i++) {
+                if (i != l1.size() - 1) {
+                    t1.add(joiner.join(l1.get(i), l1.get(i+1)));
+                }
+                i++;
+            }
+
+            l1.clear();
+            l1.addAll(t1);
+
+            for (int i = 0; i < l1.size(); i++) {
+                if (i != l1.size() - 1 && i < l1.size()) {
+                    l1.add(joiner.join(l1.get(i), l1.get(i+1)));
+                }
+                i++;
+            }
+
+            System.out.println("La suma de todos los elementos del array es: " + l1.get(l1.size()-1));
+        }
+
+        if (joiner instanceof JoinSpace) {
+            t2.clear();
+
+            for (int i = 0; i < l1.size(); i++) {
+                if (i != l1.size() - 1) {
+                    t2.add(joiner.join(l1.get(i), l1.get(i+1)));
+                }
+                i++;
+            }
+
+            l1.clear();
+            l1.addAll(t2);
+
+            for (int i = 0; i < l1.size(); i++) {
+                if (i != l1.size() - 1 && i < l1.size()) {
+                    l1.add(joiner.join(l1.get(i), l1.get(i+1)));
+                }
+                i++;
+            }
+
+            String result = (String) l1.get(l1.size()-1);
+
+            System.out.println("La unión de todas las string de la lista es: " + result);
+
+        }
+
+
+
+
+        return t1;
+    }
+
 }
 
 /*
