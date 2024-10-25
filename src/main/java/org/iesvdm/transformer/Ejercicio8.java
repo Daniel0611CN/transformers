@@ -11,7 +11,7 @@ public class Ejercicio8 {
         ArrayList<Integer> a = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            a.add((int) (Math.random() * 50));
+            a.add(i);
         };
 
         ArrayList<String> b = new ArrayList<>();
@@ -24,6 +24,8 @@ public class Ejercicio8 {
         b.add("F");
         b.add("G");
         b.add("H");
+        b.add("I");
+        b.add("J");
 
         System.out.println(a);
         System.out.println(b);

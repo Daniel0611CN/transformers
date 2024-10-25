@@ -41,56 +41,39 @@ public class Joiners
 
             System.out.println("\nTransformando Arraylist ... ");
 
-            for (int i = 0; i < l1.size(); i++) {
-                if (i != l1.size() - 1) {
-                    t1.add(joiner.join(l1.get(i), l1.get(i+1)));
-                }
-                i++;
+            T aux = joiner.join(l1.get(0), l1.get(1));
+            t1.add(aux);
+            for (int i = 2; i < l1.size(); i++) {
+                aux = joiner.join(aux, l1.get(i));
+                t1.add(aux);
             }
 
-            l1.clear();
-            l1.addAll(t1);
+            T sum = t1.get(t1.size()-1);
 
-            for (int i = 0; i < l1.size(); i++) {
-                if (i != l1.size() - 1 && i < l1.size()) {
-                    l1.add(joiner.join(l1.get(i), l1.get(i+1)));
-                }
-                i++;
-            }
-
-            System.out.println("La suma de todos los elementos del array es: " + l1.get(l1.size()-1));
+            System.out.println("La suma de todos los elementos del array es: " + sum);
         }
 
         if (joiner instanceof JoinSpace) {
             t2.clear();
 
-            for (int i = 0; i < l1.size(); i++) {
-                if (i != l1.size() - 1) {
-                    t2.add(joiner.join(l1.get(i), l1.get(i+1)));
-                }
-                i++;
+            System.out.println("\nTransformando Arraylist ... ");
+
+            T aux = joiner.join(l1.get(0), l1.get(1));
+            t2.add(aux);
+            for (int i = 2; i < l1.size(); i++) {
+
+                aux = joiner.join(aux, l1.get(i));
+                t2.add(aux);
+
             }
 
-            l1.clear();
-            l1.addAll(t2);
-
-            for (int i = 0; i < l1.size(); i++) {
-                if (i != l1.size() - 1 && i < l1.size()) {
-                    l1.add(joiner.join(l1.get(i), l1.get(i+1)));
-                }
-                i++;
-            }
-
-            String result = (String) l1.get(l1.size()-1);
+            T result = t2.get(t2.size()-1);
 
             System.out.println("La unión de todas las string de la lista es: " + result);
 
         }
 
-
-
-
-        return t1;
+        return t2;
     }
 
 }
