@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 2 - Modificaciones en Transformers</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: #1a1a1a;
+        color: #e5e5e5;
+        min-height: 100vh;
+      }
+
+      h1,
+      h2 {
+        color: #ffffff;
+        font-weight: 500;
+      }
+
+      h1 {
+        font-size: 1.875rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #333;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .description {
+        background-color: #2a2a2a;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+        border: 1px solid #3a3a3a;
+      }
+
+      .code-block {
+        margin: 2rem 0;
+      }
+
+      pre {
+        background-color: #2a2a2a;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        border: 1px solid #3a3a3a;
+        margin: 1rem 0;
+      }
+
+      code {
+        font-family: "Menlo", "Monaco", "Courier New", monospace;
+        font-size: 0.9rem;
+        color: #e5e5e5;
+      }
+
+      p code {
+        background-color: #2a2a2a;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+
+      a.back-link {
+        display: inline-block;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #2a2a2a;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        border: 1px solid #3a3a3a;
+        transition: all 0.3s ease;
+        margin-bottom: 2rem;
+      }
+
+      a.back-link:hover {
+        background-color: #333333;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        border-color: #4a4a4a;
+      }
+
+      a.back-link:active {
+        transform: translateY(0);
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        pre {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="back-link">← Volver al índice</a>
+
+    <h1>Ejercicio 2 - Modificaciones en Transformers</h1>
+
+    <section class="description">
+      <p>
+        En este ejercicio, hemos implementado la modificación de la clase
+        <code>Transformers</</code> añadiendo el método <code>applyDest</code>,
+        el cual realiza la transformación de manera destructiva, es decir, modifica
+        directamente el <code>ArrayList</code> proporcionado. La diferencia clave con el
+        método <code>applyConst</code> es que este último crea un nuevo <code>ArrayList</code>,
+        mientras que <code>applyDest</code> modifica el existente.
+      </p>
+    </section>
+
+    <section class="code-block">
+      <h2>Código Principal (Ejercicio2.java)</h2>
+      <pre><code>package org.iesvdm.transformer;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Ejercicio2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<String> b = new ArrayList<>();
+        System.out.println("\nIntroduce una cadena: ");
+        String cadena = sc.next();
+        b.add(cadena);
+
+        System.out.println("\n1. Introducir otra cadena\n2. Salir");
+        int opt = sc.nextInt();
+
+        AddMessage ad1 = null;
+
+        for (int i = 0; opt == 1; i++) {
+            System.out.println("\nIntroduce una cadena: ");
+            cadena = sc.next();
+            b.add(cadena);
+            System.out.println("\n1. Introducir otra cadena\n2. Salir");
+            opt = sc.nextInt();
+        }
+
+        System.out.println("\nElige donde introducir la cadena: \n1. Delante\n2. Detrás");
+        int op = sc.nextInt();
+
+        System.out.println("\nIntroduce el elemento que quieres añadir a cada posición de la lista: ");
+        String cadenaImplementada = sc.next();
+        ad1 = new AddMessage(cadenaImplementada, op);
+        ArrayList<String> array = Transformers.applyDest(ad1, b);
+
+        System.out.println("\nArray Transformado ...");
+        System.out.println(array);
+
+        sc.close();
+    }
+}</code></pre>
+    </section>
+
+    <section class="code-block">
+      <h2>Clase Transformers</h2>
+      <pre><code>package org.iesvdm.transformer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public class Transformers {
+    public static &lt;T&gt; ArrayList&lt;T&gt; applyConst(Transformer&lt;T&gt; tran, ArrayList&lt;T&gt; a) {
+        ArrayList&lt;T&gt; b = new ArrayList&lt;&gt;();
+        for(T t : a)
+            b.add(tran.transform(t));
+        return b;
+    }
+
+    public static &lt;T&gt; ArrayList&lt;T&gt; applyDest(Transformer&lt;T&gt; tran, ArrayList&lt;T&gt; a) {
+        for (int i = 0; i &lt; a.size(); i++) {
+            T t = a.get(i);
+            a.set(i, tran.transform(t));
+        }
+        return a;
+    }
+
+    public static &lt;T&gt; ArrayList&lt;T&gt; transformList(Transformer&lt;T&gt; tran, LispList&lt;T&gt; list) {
+        ArrayList&lt;T&gt; result = new ArrayList&lt;&gt;();
+        while (!list.isEmpty()) {
+            result.add(tran.transform(list.head()));
+            list = list.tail();
+        }
+        return result;
+    }
+}</code></pre>
+    </section>
+  </body>
+</html>

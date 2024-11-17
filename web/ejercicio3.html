@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 3 - Java</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: #1a1a1a;
+        color: #e5e5e5;
+        min-height: 100vh;
+      }
+
+      h1,
+      h2 {
+        color: #ffffff;
+        font-weight: 500;
+      }
+
+      h1 {
+        font-size: 1.875rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #333;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .description {
+        background-color: #2a2a2a;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+        border: 1px solid #3a3a3a;
+      }
+
+      .code-block {
+        margin: 2rem 0;
+      }
+
+      pre {
+        background-color: #2a2a2a;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        border: 1px solid #3a3a3a;
+        margin: 1rem 0;
+      }
+
+      code {
+        font-family: "Menlo", "Monaco", "Courier New", monospace;
+        font-size: 0.9rem;
+        color: #e5e5e5;
+      }
+
+      p code {
+        background-color: #2a2a2a;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+
+      a.back-link {
+        display: inline-block;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #2a2a2a;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        border: 1px solid #3a3a3a;
+        transition: all 0.3s ease;
+        margin-bottom: 2rem;
+      }
+
+      a.back-link:hover {
+        background-color: #333333;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        border-color: #4a4a4a;
+      }
+
+      a.back-link:active {
+        transform: translateY(0);
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        pre {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="back-link">← Volver al índice</a>
+
+    <h1>Ejercicio 3 - Cálculo de Estadísticas de Productos</h1>
+
+    <section class="description">
+      <p>
+        En este ejercicio, se utiliza un flujo de Java para calcular el máximo,
+        el mínimo, la media y la cantidad de productos por fabricante, empleando
+        un acumulador de tipo <code>Double[]</code> para almacenar los valores.
+      </p>
+    </section>
+
+    <section class="code-block">
+      <h2>Código Principal (Ejercicio3.java)</h2>
+      <pre><code>import java.util.*;
+import java.util.stream.*;
+
+public class Ejercicio3 {
+    public static void main(String[] args) {
+        List&lt;Producto&gt; productos = Arrays.asList(
+            new Producto("Producto1", "Fabricante1", 10.0),
+            new Producto("Producto2", "Fabricante1", 20.0),
+            new Producto("Producto3", "Fabricante2", 30.0)
+        );
+        
+        Double[] estadisticas = productos.stream()
+            .collect(Collectors.reducing(
+                new Double[]{Double.MAX_VALUE, Double.MIN_VALUE, 0.0, 0.0},
+                p -> new Double[]{Math.min(p.getPrecio(), Double.MAX_VALUE), Math.max(p.getPrecio(), Double.MIN_VALUE), p.getPrecio(), 1.0},
+                (a, b) -> new Double[]{
+                    Math.min(a[0], b[0]), 
+                    Math.max(a[1], b[1]), 
+                    a[2] + b[2], 
+                    a[3] + b[3]
+                });
+        
+        double min = estadisticas[0];
+        double max = estadisticas[1];
+        double total = estadisticas[2];
+        double count = estadisticas[3];
+        double media = total / count;
+        
+        System.out.println("Mínimo: " + min);
+        System.out.println("Máximo: " + max);
+        System.out.println("Media: " + media);
+        System.out.println("Cantidad: " + count);
+    }
+}</code></pre>
+    </section>
+
+    <section class="code-block">
+      <h2>Clases Relacionadas</h2>
+      <p>
+        <strong>Producto.java</strong>: representa los productos con su nombre,
+        fabricante y precio.
+      </p>
+      <pre><code>public class Producto {
+    private String nombre;
+    private String fabricante;
+    private double precio;
+
+    public Producto(String nombre, String fabricante, double precio) {
+        this.nombre = nombre;
+        this.fabricante = fabricante;
+        this.precio = precio;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getFabricante() {
+        return fabricante;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+}</code></pre>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 8: Joiners</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #1a1a1a;
+      color: #e5e5e5;
+      min-height: 100vh;
+    }
+
+    h1, h2 {
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 1.875rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #333;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .description {
+      background-color: #2a2a2a;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid #3a3a3a;
+    }
+
+    .code-block {
+      margin: 2rem 0;
+    }
+
+    pre {
+      background-color: #2a2a2a;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      border: 1px solid #3a3a3a;
+      margin: 1rem 0;
+    }
+
+    code {
+      font-family: "Menlo", "Monaco", "Courier New", monospace;
+      font-size: 0.9rem;
+      color: #e5e5e5;
+    }
+
+    p code {
+      background-color: #2a2a2a;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+
+    a.back-link {
+      display: inline-block;
+      text-decoration: none;
+      color: #ffffff;
+      background-color: #2a2a2a;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.5rem;
+      border: 1px solid #3a3a3a;
+      transition: all 0.3s ease;
+      margin-bottom: 2rem;
+    }
+
+    a.back-link:hover {
+      background-color: #333333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border-color: #4a4a4a;
+    }
+
+    a.back-link:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      pre {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">Volver al índice</a>
+
+  <h1>Ejercicio 8: Joiners</h1>
+
+  <div class="description">
+    <h2>Descripción</h2>
+    <p>Este ejercicio muestra cómo se implementan las interfaces genéricas en Java y cómo se pueden utilizar para manipular colecciones de elementos. En este caso, se tiene una interfaz <code>Joiner</code> que permite combinar elementos de tipo <code>String</code> o <code>Integer</code> de diferentes formas.</p>
+  </div>
+
+  <div class="code-block">
+    <h2>Código de la clase <code>Ejercicio8.java</code></h2>
+    <pre><code>
+package org.iesvdm.transformer;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Ejercicio8 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<Integer> a = new ArrayList<>();
+        for (int i = 0; i &lt; 10; i++) {
+            a.add(i);
+        }
+
+        ArrayList<String> b = new ArrayList<>();
+        b.add("A");
+        b.add("B");
+        b.add("C");
+        b.add("D");
+        b.add("E");
+        b.add("F");
+        b.add("G");
+        b.add("H");
+        b.add("I");
+        b.add("J");
+
+        System.out.println(a);
+        System.out.println(b);
+        Joiners j = new Joiners();
+        JoinByAdding j2 = new JoinByAdding();
+        j.fold(j2, a);
+        JoinSpace j3 = new JoinSpace();
+        j.fold(j3, b);
+
+        sc.close();
+    }
+}
+    </code></pre>
+  </div>
+
+  <div class="description">
+    <h2>Explicación</h2>
+    <p>El código en <code>Ejercicio8.java</code> crea dos listas: una de enteros y otra de cadenas. A continuación, utiliza la clase <code>Joiners</code> y sus métodos para unir los elementos de estas listas de distintas formas:</p>
+    <ul>
+      <li>Usando la clase <code>JoinByAdding</code> para sumar los valores de la lista de enteros.</li>
+      <li>Usando la clase <code>JoinSpace</code> para concatenar los elementos de la lista de cadenas, separándolos con un espacio.</li>
+    </ul>
+  </div>
+
+  <div class="code-block">
+    <h2>Código de la clase <code>JoinByAdding.java</code></h2>
+    <pre><code>
+package org.iesvdm.transformer;
+
+class JoinByAdding implements Joiner&lt;Integer&gt; {
+    public Integer join(Integer int1, Integer int2) {
+        return int1 + int2;
+    }
+}
+
+/*
+ * <------------------------- Explicacion JoinByAdding -------------------------> 
+ * En el archivo JoinByAdding, hay una clase que implementa la interfaz Joiner&lt;Integer&gt;,
+ * junto a un metodo join, que recibe dos enteros, y devuelve la suma de ambos.
+ */
+    </code></pre>
+  </div>
+
+  <div class="description">
+    <h2>Explicación de <code>JoinByAdding</code></h2>
+    <p>En la clase <code>JoinByAdding</code>, la interfaz <code>Joiner&lt;Integer&gt;</code> es implementada para realizar la suma de dos números enteros. El método <code>join</code> toma dos parámetros de tipo <code>Integer</code> y retorna su suma.</p>
+  </div>
+
+</body>
+</html>

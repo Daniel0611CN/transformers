@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 5 - Java</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: #1a1a1a;
+        color: #e5e5e5;
+        min-height: 100vh;
+      }
+
+      h1,
+      h2 {
+        color: #ffffff;
+        font-weight: 500;
+      }
+
+      h1 {
+        font-size: 1.875rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #333;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .description {
+        background-color: #2a2a2a;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+        border: 1px solid #3a3a3a;
+      }
+
+      .code-block {
+        margin: 2rem 0;
+      }
+
+      pre {
+        background-color: #2a2a2a;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        border: 1px solid #3a3a3a;
+        margin: 1rem 0;
+      }
+
+      code {
+        font-family: "Menlo", "Monaco", "Courier New", monospace;
+        font-size: 0.9rem;
+        color: #e5e5e5;
+      }
+
+      p code {
+        background-color: #2a2a2a;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+
+      a.back-link {
+        display: inline-block;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #2a2a2a;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        border: 1px solid #3a3a3a;
+        transition: all 0.3s ease;
+        margin-bottom: 2rem;
+      }
+
+      a.back-link:hover {
+        background-color: #333333;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        border-color: #4a4a4a;
+      }
+
+      a.back-link:active {
+        transform: translateY(0);
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        pre {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="back-link">← Volver al índice</a>
+
+    <h1>Ejercicio 5 - Transformación de Listas</h1>
+
+    <section class="description">
+      <p>
+        En este ejercicio, se implementa un método estático
+        <code>transformList</code> dentro de la clase
+        <code>Transformers</code> que toma un objeto de tipo
+        <code>Transformer</code> y una <code>LispList</code>, y devuelve el
+        resultado de aplicar el método <code>transform</code> del objeto
+        <code>Transformer</code> a cada uno de los elementos de la lista.
+      </p>
+      <p>
+        El código permite que el usuario ingrese cadenas o enteros y transforme
+        estos valores según la opción seleccionada. El resultado de la
+        transformación es mostrado en un <code>ArrayList</code>.
+      </p>
+    </section>
+
+    <section class="code-block">
+      <h2>Código Principal (Ejercicio5.java)</h2>
+      <pre><code>package org.iesvdm.transformer;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Ejercicio5 {
+    public static &lt;T&gt; void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        applyTransformList(sc);
+        sc.close();
+    }
+
+    private static &lt;T&gt; void applyTransformList(Scanner sc) {
+        int opcion, opt, opcionCadena;
+        String cadena, elemento;
+
+        System.out.println("\nElige que tipo de dato quieres introducir: \n1. Cadena \n2. Entero");
+        opcion = sc.nextInt();
+
+        switch (opcion) {
+            case 1:
+                System.out.println("\nIntroduce una cadena: ");
+                cadena = sc.next();
+                LispList&lt;T&gt; aux = LispList.empty();
+                aux = aux.cons((T) cadena);
+                System.out.println("\nLispList: " + aux);
+                System.out.println("\n1. Introducir Cadena\n2. Salir");
+                opt = sc.nextInt();
+                for (int i = 0; opt == 1; i++) {
+                    System.out.println("\nIntroduce una cadena: ");
+                    cadena = sc.next();
+                    aux = aux.cons((T) cadena);
+                    System.out.println("\nLispList: " + aux);
+                    System.out.println("\n1. Introducir Cadena\n2. Salir");
+                    opt = sc.nextInt();
+                }
+                System.out.println("\nIntroduce en la posición donde quieres introducir la cadena: \n1. Delante ('Cadena' + Elemento Lista)\n2. Detrás (Elemento Lista + 'Cadena')");
+                opcionCadena = sc.nextInt();
+                System.out.println("\nIntroduce la cadena que quieras añadir a los elementos de la lista: ");
+                elemento = sc.next();
+                Transformer&lt;String&gt; transformer = new AddMessage(elemento, opcion);
+                ArrayList&lt;T&gt; a = Transformers.transformList((Transformer&lt;T&gt;) transformer, aux);
+                System.out.println("ArrayList Modificado: " + a);
+                break;
+
+            case 2:
+                System.out.println("\nIntroduce un número: ");
+                Integer numero = sc.nextInt();
+                LispList&lt;T&gt; aux2 = LispList.empty();
+                aux2 = aux2.cons((T) numero);
+                System.out.println("\nLispList: " + aux2);
+                System.out.println("\n1. Introducir Entero\n2. Salir");
+                int opt2 = sc.nextInt();
+                for (int i = 0; opt2 == 1; i++) {
+                    System.out.println("\nIntroduce un número: ");
+                    numero = sc.nextInt();
+                    aux2 = aux2.cons((T) numero);
+                    System.out.println("\nLispList: " + aux2);
+                    System.out.println("\n1. Introducir Entero\n2. Salir");
+                    opt2 = sc.nextInt();
+                }
+                System.out.println("\nIntroduce la cadena que quieras añadir a los elementos de la lista: ");
+                int elementoInt = sc.nextInt();
+                System.out.println("\nIntroduce la operación que quieres realizar: \n1. Suma\n2. Resta\n3. Multiplicacion\n4. Division");
+                int operacion = sc.nextInt();
+                Transformer&lt;Integer&gt; prueba2 = new Transformer&lt;&gt;() {
+                    @Override
+                    public Integer transform(Integer obj) {
+                        T a = (T) obj;
+                        switch (operacion) {
+                            case 1:
+                                return (Integer) (obj)+elementoInt;
+                            case 2:
+                                return (Integer) (obj)-elementoInt;
+                            case 3:
+                                return (Integer) (obj)*elementoInt;
+                            case 4:
+                                return (Integer) (obj)/elementoInt;
+                        }
+                        return (Integer) (obj); // Aquí indicar el valor para la transformación;
+                    }
+                };
+                ArrayList&lt;T&gt; b = Transformers.transformList((Transformer&lt;T&gt;) prueba2, aux2);
+                System.out.println("\nArrayList Modificado: " + b);
+                break;
+        }
+    }
+}</code></pre>
+    </section>
+
+    <section class="code-block">
+      <h2>Clases Relacionadas</h2>
+      <pre><code>package org.iesvdm.transformer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public class Transformers {
+    public static &lt;T&gt; ArrayList&lt;T&gt; transformList(Transformer&lt;T&gt; tran, LispList&lt;T&gt; list) {
+        ArrayList&lt;T&gt; result = new ArrayList&lt;&gt;();
+        while (!list.isEmpty()) {
+            result.add(tran.transform(list.head()));
+            list = list.tail();
+        }
+        return result;
+    }
+}
+
+class AddMessage implements Transformer&lt;String&gt; {
+    private String element;
+    private int opcion;
+
+    public AddMessage(String element, int opcion) {
+        this.element = element;
+        this.opcion = opcion;
+    }
+
+    @Override
+    public String transform(String obj) {
+        if (opcion == 1) {
+            return element + obj;
+        } else {
+            return obj + element;
+        }
+    }
+}
+
+interface Transformer&lt;T&gt; {
+    T transform(T obj);
+}</code></pre>
+    </section>
+  </body>
+</html>

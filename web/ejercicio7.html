@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 7 - Explicación del Código</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: #1a1a1a;
+        color: #e5e5e5;
+        min-height: 100vh;
+      }
+
+      h1,
+      h2 {
+        color: #ffffff;
+        font-weight: 500;
+      }
+
+      h1 {
+        font-size: 1.875rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #333;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .description {
+        background-color: #2a2a2a;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+        border: 1px solid #3a3a3a;
+      }
+
+      .code-block {
+        margin: 2rem 0;
+      }
+
+      pre {
+        background-color: #2a2a2a;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        border: 1px solid #3a3a3a;
+        margin: 1rem 0;
+      }
+
+      code {
+        font-family: "Menlo", "Monaco", "Courier New", monospace;
+        font-size: 0.9rem;
+        color: #e5e5e5;
+      }
+
+      p code {
+        background-color: #2a2a2a;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+
+      a.back-link {
+        display: inline-block;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #2a2a2a;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        border: 1px solid #3a3a3a;
+        transition: all 0.3s ease;
+        margin-bottom: 2rem;
+      }
+
+      a.back-link:hover {
+        background-color: #333333;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        border-color: #4a4a4a;
+      }
+
+      a.back-link:active {
+        transform: translateY(0);
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        pre {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="back-link">← Volver al índice</a>
+
+    <h1>Ejercicio 7 - Explicación del Código</h1>
+
+    <div class="description">
+      <p>
+        En este ejercicio, se nos pide implementar una interfaz genérica para
+        definir un método de comprobación (<code>check</code>) que acepta un
+        argumento del tipo genérico y devuelve un valor booleano. El objetivo es
+        crear clases que implementen esta interfaz y ver cómo el tipo de datos
+        varía según el valor introducido.
+      </p>
+    </div>
+
+    <h2>Explicación del Código</h2>
+    <div class="description">
+      <p>
+        El código se compone de dos clases principales:
+        <code>Ejercicio7</code> y <code>CheckParameter</code>.
+      </p>
+      <p>
+        En la clase <code>Ejercicio7</code>, utilizamos un objeto
+        <code>Scanner</code> para leer la entrada del usuario. Dependiendo de la
+        opción seleccionada (Entero, Decimal o Cadena), asignamos el tipo
+        adecuado a la variable genérica <code>T</code>.
+      </p>
+
+      <div class="code-block">
+        <pre><code>public class Ejercicio7&lt;T&gt; {
+    public static &lt;T&gt; void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        checkType(sc);
+        sc.close();
+    }
+
+    private static &lt;T&gt; void checkType(Scanner sc) {
+        T param;
+        System.out.println("\nQue tipo de valor quieres introducir: \n1. Entero\n2. Decimal\n3. Cadena");
+        int opcion = sc.nextInt();
+
+        CheckParameter&lt;T&gt; checkVarTypeAndApplyParameter = new CheckParameter&lt;&gt;();
+
+        switch (opcion) {
+            case 1:
+                System.out.println("\nIntroduce un número: ");
+                Integer valorInteger = sc.nextInt();
+                param = (T) valorInteger;
+                checkVarTypeAndApplyParameter.checkParamIsAplicated(param);
+                break;
+            case 2:
+                System.out.println("\nIntroduce un número: ");
+                Double valorDouble = sc.nextDouble();
+                param = (T) valorDouble;
+                checkVarTypeAndApplyParameter.checkParamIsAplicated(param);
+                break;
+            case 3:
+                System.out.println("\nIntroduce una cadena:");
+                param = (T) sc.next();
+                checkVarTypeAndApplyParameter.checkParamIsAplicated(param);
+                break;
+        }
+    }
+}</code></pre>
+      </div>
+
+      <p>
+        La clase <code>CheckParameter</code> implementa la interfaz
+        <code>CheckMethod</code> y define el método
+        <code>checkParamIsAplicated</code>. Este método se encarga de verificar
+        el tipo del parámetro pasado y aplicar diferentes reglas dependiendo de
+        si es un <code>Integer</code>, <code>Double</code> o
+        <code>String</code>.
+      </p>
+
+      <div class="code-block">
+        <pre><code>public class CheckParameter&lt;T&gt; implements CheckMethod&lt;T&gt; {
+    @Override
+    public boolean checkParamIsAplicated(T param) {
+        if (param instanceof Integer) {
+            if ((Integer) param % 2 != 0) {
+                System.out.println("\nEl número " + param + " es impar.");
+                return true;
+            }
+        } else if (param instanceof Double) {
+            if (param.toString().contains("2")) {
+                System.out.println("\nEl número " + param + " contiene al menos un 2.");
+                return true;
+            }
+        } else if (param instanceof String) {
+            if (((String) param).length() < 8) {
+                System.out.println("\nLa cadena " + param + " tiene menos de 8 carácteres.");
+                return true;
+            }
+        }
+        return false;
+    }
+}</code></pre>
+      </div>
+
+      <p>
+        La interfaz <code>CheckMethod</code> declara el método
+        <code>checkParamIsAplicated</code>, que acepta un parámetro de tipo
+        genérico <code>T</code> y devuelve un valor booleano que indica si se
+        cumple una de las condiciones definidas:
+      </p>
+      <ul>
+        <li>Si es un número entero, se verifica si es impar.</li>
+        <li>Si es un número decimal, se verifica si contiene el dígito "2".</li>
+        <li>Si es una cadena, se verifica si tiene menos de 8 caracteres.</li>
+      </ul>
+    </div>
+
+    <h2>Resumen</h2>
+    <div class="description">
+      <p>
+        Este ejercicio demuestra el uso de interfaces genéricas para realizar
+        diferentes comprobaciones basadas en el tipo de dato del parámetro. Cada
+        tipo de dato tiene una lógica de verificación personalizada, lo que hace
+        que el código sea flexible y reutilizable.
+      </p>
+    </div>
+
+    <h2>Resultados Esperados</h2>
+    <div class="description">
+      <p>
+        Según el tipo de valor que introduzca el usuario, el programa realizará
+        una de las siguientes verificaciones:
+      </p>
+      <ul>
+        <li>Para números enteros: Verificar si es impar.</li>
+        <li>Para números decimales: Verificar si contiene el dígito "2".</li>
+        <li>Para cadenas: Verificar si tiene menos de 8 caracteres.</li>
+      </ul>
+      <p>
+        Dependiendo del resultado, se mostrará el mensaje correspondiente que
+        indique si se ha cumplido alguna de las condiciones especificadas.
+      </p>
+    </div>
+
+    <a href="#" class="back-link">Volver al menú principal</a>
+  </body>
+</html>

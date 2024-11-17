@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicios Java</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: #1a1a1a;
+        color: #e5e5e5;
+        min-height: 100vh;
+      }
+
+      h1 {
+        font-size: 1.875rem;
+        text-align: center;
+        color: #ffffff;
+        margin-bottom: 2rem;
+        font-weight: 500;
+      }
+
+      .exercises {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #2a2a2a;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #3a3a3a;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      a:hover {
+        background-color: #333333;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        border-color: #4a4a4a;
+      }
+
+      a:active {
+        transform: translateY(0);
+      }
+
+      a::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: -100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.05),
+          transparent
+        );
+        transition: 0.5s;
+      }
+
+      a:hover::after {
+        left: 100%;
+      }
+
+      footer {
+        margin-top: 2rem;
+        text-align: center;
+        color: #888888;
+        font-size: 0.875rem;
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ejercicios de Java - Transformers</h1>
+
+    <div class="exercises">
+      <a href="ejercicio1.html"
+        >Ejercicio 1 - Transformación de Números en un Array</a
+      >
+      <a href="ejercicio2.html">Ejercicio 2 - Multiplicación por Diez</a>
+      <a href="ejercicio3.html">Ejercicio 3 - Añadir Texto a Cadenas</a>
+      <a href="ejercicio4.html">Ejercicio 4 - Operaciones de Transformación</a>
+      <a href="ejercicio5.html">Ejercicio 5 - Conversión a Cadena</a>
+      <a href="ejercicio6.html"
+        >Ejercicio 6 - Gestión de Listas y Operaciones</a
+      >
+      <a href="ejercicio7.html">Ejercicio 7 - Métodos de Transformers</a>
+      <a href="ejercicio8.html">Ejercicio 8 - Integración de Clases</a>
+    </div>
+
+    <footer>
+      Haz clic en cada ejercicio para ver el código y su explicación detallada
+    </footer>
+  </body>
+</html>
