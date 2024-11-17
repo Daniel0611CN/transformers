@@ -7,7 +7,8 @@
 
 <p style="text-align: center; color: #3498db; font-size: 1.1em;">
   🔗 <a href="https://github.com/toteabe/transformers.git" style="color: #3498db; text-decoration: none;">Repositorio en GitHub</a>
-  <a href="https://transformers-exercises.vercel.app" style="color: #3498db; text-decoration: none;">Repositorio en GitHub</a>
+  |
+  <a href="https://transformers-exercises.vercel.app" style="color: #3498db; text-decoration: none;">Explicación Ejercicios (Web Vercel)</a>
 </p>
 
 <div style="background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin: 10px 0;">
